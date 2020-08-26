@@ -24,6 +24,7 @@ import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.source.TrackGroup;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
@@ -191,8 +192,7 @@ final class VideoPlayer {
       case C.TYPE_HLS:
         return new HlsMediaSource.Factory(mediaDataSourceFactory).createMediaSource(uri);
       case C.TYPE_OTHER:
-        return new ExtractorMediaSource.Factory(mediaDataSourceFactory)
-            .setExtractorsFactory(new DefaultExtractorsFactory())
+        return new ProgressiveMediaSource.Factory(mediaDataSourceFactory)
             .createMediaSource(uri);
       default:
         {
@@ -224,7 +224,16 @@ final class VideoPlayer {
 
           @Override
           public void onPlayerStateChanged(final boolean playWhenReady, final int playbackState) {
+            if(isBuffering && playbackState != Player.STATE_BUFFERING) {
+              Map<String, Object> event = new HashMap<>();
+              event.put("event", "bufferingEnd");
+              eventSink.success(event);
+            }
             if (playbackState == Player.STATE_BUFFERING) {
+              isBuffering = true;
+              Map<String, Object> event = new HashMap<>();
+              event.put("event", "bufferingStart");
+              eventSink.success(event);
               sendBufferingUpdate();
             } else if (playbackState == Player.STATE_READY) {
               if (!isInitialized) {
@@ -238,6 +247,7 @@ final class VideoPlayer {
               eventSink.success(event);
             }
           }
+
 
           @Override
           public void onPlayerError(final ExoPlaybackException error) {
@@ -274,6 +284,7 @@ final class VideoPlayer {
         });
   }
 
+  boolean isBuffering = false;
   void sendBufferingUpdate() {
     Map<String, Object> event = new HashMap<>();
     event.put("event", "bufferingUpdate");

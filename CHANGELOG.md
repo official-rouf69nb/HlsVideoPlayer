@@ -1,3 +1,6 @@
+## 1.0.0
+* Stable version with androidx migration
+
 ## 0.10.12
 
 * Introduce VideoPlayerOptions to set the audio mix mode.

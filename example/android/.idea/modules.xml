@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" group="android" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="android/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1124657/e2e.iml" filepath="$PROJECT_DIR$/.idea/modules/-1124657/e2e.iml" group="android/e2e" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1783290832/video_player.iml" filepath="$PROJECT_DIR$/.idea/modules/1783290832/video_player.iml" group="android/video_player" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" />
     </modules>
   </component>
 </project>
